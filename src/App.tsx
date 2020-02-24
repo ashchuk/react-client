@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { Provider } from 'mobx-react';
+import { createBrowserHistory } from 'history';
+import { TodoModel } from './app/models';
+import { createStores } from './app/stores';
+import { App } from './app';
 
-const App: React.FC = () => {
-    return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
-        </div>
-    );
-};
+// default fixtures for TodoStore
+const defaultTodos = [
+    new TodoModel('Use Mobx'),
+    new TodoModel('Use React', true)
+];
 
-export default App;
+// prepare MobX stores
+export const history = createBrowserHistory();
+export const rootStore = createStores(history, defaultTodos);
+
+// render react DOM
+ReactDOM.render(
+    <Provider {...rootStore}>
+        <App history={history} />
+    </Provider>,
+    document.getElementById('root')
+);
