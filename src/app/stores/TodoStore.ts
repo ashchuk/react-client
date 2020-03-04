@@ -1,5 +1,5 @@
 import { observable, computed, action } from 'mobx';
-import { TodoModel } from '../models';
+import { TodoModel } from 'app/models';
 
 export class TodoStore {
   constructor(fixtures: TodoModel[]) {
@@ -20,7 +20,7 @@ export class TodoStore {
 
   @action
   addTodo = (item: Partial<TodoModel>): void => {
-    this.todos.push(new TodoModel(item.text as string, item.completed));
+    this.todos.push(new TodoModel(item.text, item.completed));
   };
 
   @action
